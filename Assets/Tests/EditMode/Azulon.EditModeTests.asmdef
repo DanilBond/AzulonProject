@@ -1,0 +1,24 @@
+{
+  "name": "Azulon.EditModeTests",
+  "rootNamespace": "Azulon.Tests.EditMode",
+  "references": [
+    "Azulon.Domain",
+    "Azulon.Configuration"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
