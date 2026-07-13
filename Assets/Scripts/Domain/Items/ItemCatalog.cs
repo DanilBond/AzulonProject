@@ -32,11 +32,12 @@ namespace Azulon.Domain.Items
                     throw new ArgumentException("Catalog tags cannot contain null.", nameof(tags));
                 }
 
-                if (!_tagsById.TryAdd(tag.Id, tag))
+                if (_tagsById.ContainsKey(tag.Id))
                 {
                     throw new ArgumentException($"Catalog contains duplicate tag ID '{tag.Id}'.", nameof(tags));
                 }
 
+                _tagsById.Add(tag.Id, tag);
                 tagList.Add(tag);
             }
 
@@ -54,11 +55,12 @@ namespace Azulon.Domain.Items
                     throw new ArgumentException("Catalog items cannot contain null.", nameof(items));
                 }
 
-                if (!_itemsById.TryAdd(item.Id, item))
+                if (_itemsById.ContainsKey(item.Id))
                 {
                     throw new ArgumentException($"Catalog contains duplicate item ID '{item.Id}'.", nameof(items));
                 }
 
+                _itemsById.Add(item.Id, item);
                 foreach (var tagId in item.Tags)
                 {
                     if (!_tagsById.ContainsKey(tagId))
