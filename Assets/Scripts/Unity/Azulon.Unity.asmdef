@@ -1,0 +1,19 @@
+{
+  "name": "Azulon.Unity",
+  "rootNamespace": "Azulon.Unity",
+  "references": [
+    "Azulon.Domain",
+    "Azulon.Application",
+    "Azulon.Configuration",
+    "Azulon.Presentation"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

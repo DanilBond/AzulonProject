@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c74360d3fa2ab4bb055923670702ce, type: 3}
   m_Name: GameSessionConfig_Main
   m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Game.GameSessionConfigAsset
-  _itemCatalog: {fileID: 0}
-  _questCatalog: {fileID: 0}
-  _startingCoins: 8
+  _itemCatalog: {fileID: 11400000, guid: fa51184f8c6514e42b918d5f6406b9c0, type: 2}
+  _questCatalog: {fileID: 11400000, guid: 18f09fc887125db4ca7af64599e62070, type: 2}
+  _startingCoins: 4
   _dailyCoinStipend: 4
   _visitorsPerDay: 3
   _offersPerVisitor: 3

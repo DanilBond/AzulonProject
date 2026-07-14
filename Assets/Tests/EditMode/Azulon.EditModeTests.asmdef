@@ -4,6 +4,7 @@
   "references": [
     "Azulon.Domain",
     "Azulon.Application",
+    "Azulon.Presentation",
     "Azulon.Configuration"
   ],
   "includePlatforms": [

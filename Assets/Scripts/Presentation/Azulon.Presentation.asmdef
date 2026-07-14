@@ -1,0 +1,17 @@
+{
+  "name": "Azulon.Presentation",
+  "rootNamespace": "Azulon.Presentation",
+  "references": [
+    "Azulon.Domain",
+    "Azulon.Application"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": true
+}
