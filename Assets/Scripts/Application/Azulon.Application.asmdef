@@ -1,9 +1,8 @@
 {
-  "name": "Azulon.Configuration",
-  "rootNamespace": "Azulon.Configuration",
+  "name": "Azulon.Application",
+  "rootNamespace": "Azulon.Application",
   "references": [
-    "Azulon.Domain",
-    "Azulon.Application"
+    "Azulon.Domain"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
@@ -13,5 +12,5 @@
   "autoReferenced": true,
   "defineConstraints": [],
   "versionDefines": [],
-  "noEngineReferences": false
+  "noEngineReferences": true
 }

@@ -3,6 +3,7 @@
   "rootNamespace": "Azulon.Tests.EditMode",
   "references": [
     "Azulon.Domain",
+    "Azulon.Application",
     "Azulon.Configuration"
   ],
   "includePlatforms": [

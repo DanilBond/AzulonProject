@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Azulon.Configuration.Game;
 using Azulon.Configuration.Items;
 using Azulon.Configuration.Quests;
 using Azulon.Configuration.Quests.Requirements;
 using Azulon.Domain.Items;
+using Azulon.Domain.Progression;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -148,6 +150,46 @@ namespace Azulon.Tests.EditMode.Configuration
             SetObjectArray(serializedObject.FindProperty("_questDefinitions"), quests);
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
             return catalog;
+        }
+
+        public GameSessionConfigAsset CreateGameSessionConfig(
+            ItemCatalogAsset itemCatalog,
+            GuildQuestCatalogAsset questCatalog,
+            int startingCoins,
+            int dailyCoinStipend,
+            int visitorsPerDay,
+            int offersPerVisitor,
+            params RarityUnlockThreshold[] rarityThresholds)
+        {
+            if (rarityThresholds == null)
+            {
+                throw new ArgumentNullException(nameof(rarityThresholds));
+            }
+
+            var config = Track(ScriptableObject.CreateInstance<GameSessionConfigAsset>());
+            config.name = "GameSessionConfig_Test";
+
+            var serializedObject = new SerializedObject(config);
+            serializedObject.FindProperty("_itemCatalog").objectReferenceValue = itemCatalog;
+            serializedObject.FindProperty("_questCatalog").objectReferenceValue = questCatalog;
+            serializedObject.FindProperty("_startingCoins").intValue = startingCoins;
+            serializedObject.FindProperty("_dailyCoinStipend").intValue = dailyCoinStipend;
+            serializedObject.FindProperty("_visitorsPerDay").intValue = visitorsPerDay;
+            serializedObject.FindProperty("_offersPerVisitor").intValue = offersPerVisitor;
+
+            var thresholdsProperty = serializedObject.FindProperty("_rarityThresholds");
+            thresholdsProperty.arraySize = rarityThresholds.Length;
+            for (var index = 0; index < rarityThresholds.Length; index++)
+            {
+                var thresholdProperty = thresholdsProperty.GetArrayElementAtIndex(index);
+                thresholdProperty.FindPropertyRelative("_rarity").intValue =
+                    (int)rarityThresholds[index].Rarity;
+                thresholdProperty.FindPropertyRelative("_requiredReputation").intValue =
+                    rarityThresholds[index].RequiredReputation;
+            }
+
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return config;
         }
 
         public Sprite CreateIcon()
