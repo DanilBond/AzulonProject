@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Azulon.Configuration.Items;
+using Azulon.Configuration.Quests;
+using Azulon.Configuration.Quests.Requirements;
 using Azulon.Domain.Items;
 using UnityEditor;
 using UnityEngine;
@@ -62,6 +64,88 @@ namespace Azulon.Tests.EditMode.Configuration
             var serializedObject = new SerializedObject(catalog);
             SetObjectArray(serializedObject.FindProperty("_tagDefinitions"), tags);
             SetObjectArray(serializedObject.FindProperty("_itemDefinitions"), items);
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return catalog;
+        }
+
+        public ExactItemRequirementDefinition CreateExactItemRequirement(
+            string displayName,
+            ItemDefinition item,
+            int requiredQuantity)
+        {
+            var definition = Track(ScriptableObject.CreateInstance<ExactItemRequirementDefinition>());
+            definition.name = "Requirement_ExactItem_Test";
+
+            var serializedObject = new SerializedObject(definition);
+            serializedObject.FindProperty("_displayName").stringValue = displayName;
+            serializedObject.FindProperty("_item").objectReferenceValue = item;
+            serializedObject.FindProperty("_requiredQuantity").intValue = requiredQuantity;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return definition;
+        }
+
+        public TagCountRequirementDefinition CreateTagCountRequirement(
+            string displayName,
+            ItemTagDefinition tag,
+            int requiredQuantity)
+        {
+            var definition = Track(ScriptableObject.CreateInstance<TagCountRequirementDefinition>());
+            definition.name = "Requirement_TagCount_Test";
+
+            var serializedObject = new SerializedObject(definition);
+            serializedObject.FindProperty("_displayName").stringValue = displayName;
+            serializedObject.FindProperty("_tag").objectReferenceValue = tag;
+            serializedObject.FindProperty("_requiredQuantity").intValue = requiredQuantity;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return definition;
+        }
+
+        public TotalPowerRequirementDefinition CreateTotalPowerRequirement(
+            string displayName,
+            int requiredPower)
+        {
+            var definition = Track(ScriptableObject.CreateInstance<TotalPowerRequirementDefinition>());
+            definition.name = "Requirement_TotalPower_Test";
+
+            var serializedObject = new SerializedObject(definition);
+            serializedObject.FindProperty("_displayName").stringValue = displayName;
+            serializedObject.FindProperty("_requiredPower").intValue = requiredPower;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return definition;
+        }
+
+        public GuildQuestDefinition CreateQuest(
+            string id,
+            string displayName,
+            string description,
+            int rewardCoins,
+            int rewardReputation,
+            params QuestRequirementDefinition[] requirements)
+        {
+            var definition = Track(ScriptableObject.CreateInstance<GuildQuestDefinition>());
+            definition.name = $"Quest_{id}";
+
+            var serializedObject = new SerializedObject(definition);
+            serializedObject.FindProperty("_id").stringValue = id;
+            serializedObject.FindProperty("_displayName").stringValue = displayName;
+            serializedObject.FindProperty("_description").stringValue = description;
+            serializedObject.FindProperty("_rewardCoins").intValue = rewardCoins;
+            serializedObject.FindProperty("_rewardReputation").intValue = rewardReputation;
+            SetObjectArray(serializedObject.FindProperty("_requirements"), requirements);
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return definition;
+        }
+
+        public GuildQuestCatalogAsset CreateQuestCatalog(
+            ItemCatalogAsset itemCatalog,
+            params GuildQuestDefinition[] quests)
+        {
+            var catalog = Track(ScriptableObject.CreateInstance<GuildQuestCatalogAsset>());
+            catalog.name = "GuildQuestCatalog_Test";
+
+            var serializedObject = new SerializedObject(catalog);
+            serializedObject.FindProperty("_itemCatalog").objectReferenceValue = itemCatalog;
+            SetObjectArray(serializedObject.FindProperty("_questDefinitions"), quests);
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
             return catalog;
         }

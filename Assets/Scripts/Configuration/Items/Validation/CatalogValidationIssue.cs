@@ -1,4 +1,4 @@
-namespace Azulon.Configuration.Items.Validation
+namespace Azulon.Configuration.Validation
 {
     public enum CatalogValidationSeverity
     {

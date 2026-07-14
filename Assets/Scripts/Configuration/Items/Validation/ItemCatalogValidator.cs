@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Azulon.Configuration.Validation;
 using Azulon.Domain.Items;
 
 namespace Azulon.Configuration.Items.Validation

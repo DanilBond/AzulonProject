@@ -3,13 +3,13 @@ using System.Collections.ObjectModel;
 using System.Text;
 using Azulon.Configuration.Validation;
 
-namespace Azulon.Configuration.Items.Validation
+namespace Azulon.Configuration.Quests.Validation
 {
-    public sealed class ItemCatalogValidationResult
+    public sealed class GuildQuestCatalogValidationResult
     {
         private readonly ReadOnlyCollection<CatalogValidationIssue> _issues;
 
-        public ItemCatalogValidationResult(IList<CatalogValidationIssue> issues)
+        public GuildQuestCatalogValidationResult(IList<CatalogValidationIssue> issues)
         {
             _issues = new List<CatalogValidationIssue>(issues).AsReadOnly();
         }

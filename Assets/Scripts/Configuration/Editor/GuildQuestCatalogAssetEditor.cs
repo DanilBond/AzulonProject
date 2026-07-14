@@ -1,13 +1,13 @@
-using Azulon.Configuration.Items;
-using Azulon.Configuration.Items.Validation;
+using Azulon.Configuration.Quests;
+using Azulon.Configuration.Quests.Validation;
 using Azulon.Configuration.Validation;
 using UnityEditor;
 using UnityEngine;
 
 namespace Azulon.Configuration.Editor
 {
-    [CustomEditor(typeof(ItemCatalogAsset))]
-    public sealed class ItemCatalogAssetEditor : UnityEditor.Editor
+    [CustomEditor(typeof(GuildQuestCatalogAsset))]
+    public sealed class GuildQuestCatalogAssetEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
@@ -16,10 +16,10 @@ namespace Azulon.Configuration.Editor
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.Space(8f);
-            var result = ItemCatalogValidator.Validate((ItemCatalogAsset)target);
+            var result = GuildQuestCatalogValidator.Validate((GuildQuestCatalogAsset)target);
             if (result.IsValid)
             {
-                EditorGUILayout.HelpBox("Catalog configuration is valid.", MessageType.Info);
+                EditorGUILayout.HelpBox("Quest catalog configuration is valid.", MessageType.Info);
                 return;
             }
 

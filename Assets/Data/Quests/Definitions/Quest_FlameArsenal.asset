@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213146615ae119347a9ad923d1daa972, type: 3}
+  m_Name: Quest_FlameArsenal
+  m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Quests.GuildQuestDefinition
+  _id: flame_arsenal
+  _displayName: Flame Arsenal
+  _description: Assemble a powerful collection of fire weapons.
+  _rewardCoins: 8
+  _rewardReputation: 2
+  _requirements:
+  - {fileID: 11400000, guid: f59429c5fb4513547877ea811faaeac7, type: 2}
+  - {fileID: 11400000, guid: 0b4258e39390c8140be2ca1e793c2ec7, type: 2}
+  - {fileID: 11400000, guid: 7fc6425869db1aa489c54c68f1387408, type: 2}

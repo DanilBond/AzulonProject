@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b1046d4d96a734f8a9461d2056835e, type: 3}
+  m_Name: GuildQuestCatalog_Main
+  m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Quests.GuildQuestCatalogAsset
+  _itemCatalog: {fileID: 11400000, guid: fa51184f8c6514e42b918d5f6406b9c0, type: 2}
+  _questDefinitions:
+  - {fileID: 11400000, guid: 07f199f074e115f4dad6634660642d43, type: 2}
+  - {fileID: 11400000, guid: 6568490bde7a4934c91d3ed405678e38, type: 2}
