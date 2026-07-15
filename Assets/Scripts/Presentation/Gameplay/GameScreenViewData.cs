@@ -8,6 +8,7 @@ namespace Azulon.Presentation.Gameplay
     {
         private readonly IReadOnlyList<MarketOfferViewData> _offers;
         private readonly IReadOnlyList<InventoryItemViewData> _inventoryItems;
+        private readonly IReadOnlyList<CollectionItemViewData> _collectionItems;
         private readonly IReadOnlyList<QuestViewData> _quests;
 
         public GameScreenViewData(
@@ -21,11 +22,11 @@ namespace Azulon.Presentation.Gameplay
             int? nextRarityRequiredReputation,
             int totalOwnedItemCount,
             int uniqueOwnedItemCount,
-            int availableItemCount,
             int claimedQuestCount,
             bool isCompleted,
             IEnumerable<MarketOfferViewData> offers,
             IEnumerable<InventoryItemViewData> inventoryItems,
+            IEnumerable<CollectionItemViewData> collectionItems,
             IEnumerable<QuestViewData> quests)
         {
             if (offers == null)
@@ -43,6 +44,11 @@ namespace Azulon.Presentation.Gameplay
                 throw new ArgumentNullException(nameof(quests));
             }
 
+            if (collectionItems == null)
+            {
+                throw new ArgumentNullException(nameof(collectionItems));
+            }
+
             DayNumber = dayNumber;
             VisitorNumber = visitorNumber;
             VisitorsPerDay = visitorsPerDay;
@@ -53,12 +59,13 @@ namespace Azulon.Presentation.Gameplay
             NextRarityRequiredReputation = nextRarityRequiredReputation;
             TotalOwnedItemCount = totalOwnedItemCount;
             UniqueOwnedItemCount = uniqueOwnedItemCount;
-            AvailableItemCount = availableItemCount;
             ClaimedQuestCount = claimedQuestCount;
             IsCompleted = isCompleted;
             _offers = new List<MarketOfferViewData>(offers).AsReadOnly();
             _inventoryItems = new List<InventoryItemViewData>(inventoryItems).AsReadOnly();
+            _collectionItems = new List<CollectionItemViewData>(collectionItems).AsReadOnly();
             _quests = new List<QuestViewData>(quests).AsReadOnly();
+            AvailableItemCount = _collectionItems.Count;
         }
 
         public int DayNumber { get; }
@@ -94,6 +101,8 @@ namespace Azulon.Presentation.Gameplay
         public IReadOnlyList<MarketOfferViewData> Offers => _offers;
 
         public IReadOnlyList<InventoryItemViewData> InventoryItems => _inventoryItems;
+
+        public IReadOnlyList<CollectionItemViewData> CollectionItems => _collectionItems;
 
         public IReadOnlyList<QuestViewData> Quests => _quests;
     }

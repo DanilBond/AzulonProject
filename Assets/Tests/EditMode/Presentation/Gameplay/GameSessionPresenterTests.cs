@@ -33,6 +33,10 @@ namespace Azulon.Tests.EditMode.Presentation.Gameplay
             Assert.That(viewData.NextRarityRequiredReputation, Is.EqualTo(1));
             Assert.That(viewData.AvailableItemCount, Is.EqualTo(3));
             Assert.That(viewData.TotalOwnedItemCount, Is.Zero);
+            Assert.That(viewData.CollectionItems.Count, Is.EqualTo(3));
+            Assert.That(viewData.CollectionItems[0].IsOwned, Is.False);
+            Assert.That(viewData.CollectionItems[0].IsUnlocked, Is.True);
+            Assert.That(viewData.CollectionItems[1].IsUnlocked, Is.False);
             Assert.That(viewData.Offers.Count, Is.EqualTo(1));
             Assert.That(viewData.Offers[0].Item.TagNames, Is.EquivalentTo(new[] { "Fire", "Weapon" }));
             Assert.That(viewData.Offers[0].CanPurchase, Is.True);
@@ -59,6 +63,7 @@ namespace Azulon.Tests.EditMode.Presentation.Gameplay
             Assert.That(updated.TotalOwnedItemCount, Is.EqualTo(1));
             Assert.That(updated.InventoryItems.Count, Is.EqualTo(1));
             Assert.That(updated.InventoryItems[0].Quantity, Is.EqualTo(1));
+            Assert.That(updated.CollectionItems[0].OwnedQuantity, Is.EqualTo(1));
             Assert.That(updated.Offers[0].IsPurchased, Is.True);
             Assert.That(updated.Offers[0].CanPurchase, Is.False);
             Assert.That(duplicate.Outcome, Is.EqualTo(GameActionOutcome.OfferAlreadyPurchased));

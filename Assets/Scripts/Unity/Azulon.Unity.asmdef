@@ -5,7 +5,9 @@
     "Azulon.Domain",
     "Azulon.Application",
     "Azulon.Configuration",
-    "Azulon.Presentation"
+    "Azulon.Presentation",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

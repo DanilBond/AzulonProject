@@ -21,6 +21,7 @@ namespace Azulon.Presentation.Gameplay
         {
             var offers = CreateOfferViews();
             var inventoryItems = CreateInventoryViews();
+            var collectionItems = CreateCollectionViews();
             var quests = CreateQuestViews(out var claimedQuestCount);
             ResolveNextRarity(out var nextRarity, out var nextRequiredReputation);
 
@@ -35,11 +36,11 @@ namespace Azulon.Presentation.Gameplay
                 nextRequiredReputation,
                 _session.TotalOwnedItemCount,
                 _session.UniqueOwnedItemCount,
-                _session.ItemCatalog.Items.Count,
                 claimedQuestCount,
                 _session.IsCompleted,
                 offers,
                 inventoryItems,
+                collectionItems,
                 quests);
         }
 
@@ -183,6 +184,28 @@ namespace Azulon.Presentation.Gameplay
             }
 
             return inventoryItems.AsReadOnly();
+        }
+
+        private IReadOnlyList<CollectionItemViewData> CreateCollectionViews()
+        {
+            var quantities = new Dictionary<ItemId, int>();
+            foreach (var entry in _session.CreateInventorySnapshot())
+            {
+                quantities.Add(entry.ItemId, entry.Quantity);
+            }
+
+            var collectionItems = new List<CollectionItemViewData>(
+                _session.ItemCatalog.Items.Count);
+            foreach (var item in _session.ItemCatalog.Items)
+            {
+                quantities.TryGetValue(item.Id, out var ownedQuantity);
+                collectionItems.Add(new CollectionItemViewData(
+                    CreateItemView(item),
+                    ownedQuantity,
+                    (int)item.Rarity <= (int)_session.MaximumUnlockedRarity));
+            }
+
+            return collectionItems.AsReadOnly();
         }
 
         private IReadOnlyList<QuestViewData> CreateQuestViews(out int claimedQuestCount)

@@ -5,7 +5,8 @@
     "Azulon.Domain",
     "Azulon.Application",
     "Azulon.Presentation",
-    "Azulon.Configuration"
+    "Azulon.Configuration",
+    "Azulon.Unity"
   ],
   "includePlatforms": [
     "Editor"
