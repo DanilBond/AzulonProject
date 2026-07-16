@@ -23,6 +23,8 @@ namespace Azulon.Configuration.Quests.Requirements
             _issues = issues;
         }
 
+        public int RegisteredItemCount => _registeredItems.Count;
+
         public void RequireRegisteredItem(
             QuestRequirementDefinition requirement,
             ItemDefinition item)

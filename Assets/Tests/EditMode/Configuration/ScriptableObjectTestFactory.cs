@@ -116,6 +116,22 @@ namespace Azulon.Tests.EditMode.Configuration
             return definition;
         }
 
+        public UniqueItemCountRequirementDefinition CreateUniqueItemCountRequirement(
+            string displayName,
+            int requiredUniqueItemCount)
+        {
+            var definition = Track(
+                ScriptableObject.CreateInstance<UniqueItemCountRequirementDefinition>());
+            definition.name = "Requirement_UniqueItemCount_Test";
+
+            var serializedObject = new SerializedObject(definition);
+            serializedObject.FindProperty("_displayName").stringValue = displayName;
+            serializedObject.FindProperty("_requiredUniqueItemCount").intValue =
+                requiredUniqueItemCount;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            return definition;
+        }
+
         public GuildQuestDefinition CreateQuest(
             string id,
             string displayName,

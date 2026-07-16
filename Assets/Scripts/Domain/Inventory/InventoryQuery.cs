@@ -59,6 +59,16 @@ namespace Azulon.Domain.Inventory
             return count;
         }
 
+        public int CountUniqueItems()
+        {
+            foreach (var entry in _entries)
+            {
+                GetCatalogItem(entry.ItemId);
+            }
+
+            return _entries.Count;
+        }
+
         public int CalculateTotalPower()
         {
             var totalPower = 0;

@@ -107,6 +107,28 @@ namespace Azulon.Tests.EditMode.Configuration
             Assert.That(ContainsIssue(result, "must require at least one item"), Is.True);
         }
 
+        [Test]
+        public void Validate_WithImpossibleUniqueItemCount_ReportsError()
+        {
+            var setup = CreateValidSetup();
+            var requirement = _factory.CreateUniqueItemCountRequirement("Collection", 2);
+            var quest = _factory.CreateQuest(
+                "impossible_collection",
+                "Impossible Collection",
+                "A quest requiring more unique items than exist.",
+                3,
+                1,
+                requirement);
+            var catalog = _factory.CreateQuestCatalog(setup.ItemCatalog, quest);
+
+            var result = GuildQuestCatalogValidator.Validate(catalog);
+
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(
+                ContainsIssue(result, "catalog contains only 1"),
+                Is.True);
+        }
+
         private ValidQuestSetup CreateValidSetup()
         {
             var fire = _factory.CreateTag("fire", "Fire");

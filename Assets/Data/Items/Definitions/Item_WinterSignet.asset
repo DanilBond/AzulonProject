@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9b95d42dce999408eaf89acaf9d826, type: 3}
+  m_Name: Item_WinterSignet
+  m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Items.ItemDefinition
+  _id: winter_signet
+  _displayName: Winter Signet
+  _description: A frosted ring that bears the mark of eternal winter.
+  _icon: {fileID: 21300000, guid: 2e4eba7dec9914e1d99d0a0de502d96b, type: 3}
+  _price: 8
+  _power: 12
+  _rarity: 2
+  _category: 3
+  _tags:
+  - {fileID: 11400000, guid: 76689176cf9771041ab36871a241ccb1, type: 2}
+  - {fileID: 11400000, guid: 256ad4d3e7d04894f820c768d148d547, type: 2}

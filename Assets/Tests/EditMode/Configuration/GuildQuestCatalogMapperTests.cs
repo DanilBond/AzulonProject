@@ -41,6 +41,7 @@ namespace Azulon.Tests.EditMode.Configuration
             var exact = _factory.CreateExactItemRequirement("Exact", item, 1);
             var tagged = _factory.CreateTagCountRequirement("Tagged", fire, 2);
             var power = _factory.CreateTotalPowerRequirement("Power", 10);
+            var uniqueItems = _factory.CreateUniqueItemCountRequirement("Collection", 1);
             var questDefinition = _factory.CreateQuest(
                 "flame_arsenal",
                 "Flame Arsenal",
@@ -49,7 +50,8 @@ namespace Azulon.Tests.EditMode.Configuration
                 1,
                 exact,
                 tagged,
-                power);
+                power,
+                uniqueItems);
             var catalogAsset = _factory.CreateQuestCatalog(itemCatalog, questDefinition);
 
             var catalog = GuildQuestCatalogMapper.ToDomain(catalogAsset);
@@ -58,6 +60,7 @@ namespace Azulon.Tests.EditMode.Configuration
             Assert.That(quest.Requirements[0], Is.TypeOf<ExactItemRequirement>());
             Assert.That(quest.Requirements[1], Is.TypeOf<TagCountRequirement>());
             Assert.That(quest.Requirements[2], Is.TypeOf<TotalPowerRequirement>());
+            Assert.That(quest.Requirements[3], Is.TypeOf<UniqueItemCountRequirement>());
             Assert.That(quest.RewardCoins, Is.EqualTo(6));
             Assert.That(quest.RewardReputation, Is.EqualTo(1));
         }

@@ -19,6 +19,7 @@ namespace Azulon.Tests.EditMode.Domain.Inventory
             var query = new InventoryQuery(inventory, context.Catalog);
 
             Assert.That(query.GetItemQuantity(context.EmberBlade.Id), Is.EqualTo(2));
+            Assert.That(query.CountUniqueItems(), Is.EqualTo(3));
             Assert.That(query.CountItemsWithTag(context.FireTagId), Is.EqualTo(3));
             Assert.That(query.CountItemsWithTag(context.WeaponTagId), Is.EqualTo(2));
             Assert.That(query.CalculateTotalPower(), Is.EqualTo(23));
@@ -35,6 +36,7 @@ namespace Azulon.Tests.EditMode.Domain.Inventory
             inventory.Add(context.EmberBlade.Id);
 
             Assert.That(query.GetItemQuantity(context.EmberBlade.Id), Is.EqualTo(1));
+            Assert.That(query.CountUniqueItems(), Is.EqualTo(1));
             Assert.That(query.CalculateTotalPower(), Is.EqualTo(7));
         }
 
@@ -48,6 +50,10 @@ namespace Azulon.Tests.EditMode.Domain.Inventory
 
             Assert.That(
                 () => query.CalculateTotalPower(),
+                Throws.TypeOf<InvalidOperationException>()
+                    .With.Message.Contains("unknown_item"));
+            Assert.That(
+                () => query.CountUniqueItems(),
                 Throws.TypeOf<InvalidOperationException>()
                     .With.Message.Contains("unknown_item"));
         }

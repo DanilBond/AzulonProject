@@ -91,8 +91,8 @@ namespace Azulon.Unity.UI.Views
                 throw new ArgumentNullException(nameof(contentCatalog));
             }
 
-            _coinsText.text = $"Coins: {viewData.Coins}";
-            _reputationText.text = $"Reputation: {viewData.Reputation}";
+            _coinsText.text = $"{viewData.Coins}";
+            _reputationText.text = $"{viewData.Reputation}";
             _dayText.text = $"Day {viewData.DayNumber}";
             _visitorText.text = $"Merchant {viewData.VisitorNumber} / {viewData.VisitorsPerDay}";
             _rarityText.text = $"Unlocked: {viewData.MaximumUnlockedRarity}";
@@ -100,7 +100,7 @@ namespace Azulon.Unity.UI.Views
             _collectionProgressText.text =
                 $"Collection: {viewData.UniqueOwnedItemCount} / {viewData.AvailableItemCount}";
             _questProgressText.text =
-                $"Commissions: {viewData.ClaimedQuestCount} / {viewData.QuestCount}";
+                $"Tasks: {viewData.ClaimedQuestCount} / {viewData.QuestCount}";
 
             RenderMarket(viewData, contentCatalog);
             RenderCollection(viewData, contentCatalog);
