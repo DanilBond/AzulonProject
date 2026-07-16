@@ -16,6 +16,12 @@ namespace Azulon.Configuration.Editor
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.Space(8f);
+            if (GUILayout.Button("Open Content Authoring"))
+            {
+                GuildContentAuthoringWindow.Open();
+            }
+
+            EditorGUILayout.Space(8f);
             var result = ItemCatalogValidator.Validate((ItemCatalogAsset)target);
             if (result.IsValid)
             {

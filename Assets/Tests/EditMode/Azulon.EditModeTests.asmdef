@@ -6,6 +6,7 @@
     "Azulon.Application",
     "Azulon.Presentation",
     "Azulon.Configuration",
+    "Azulon.Configuration.Editor",
     "Azulon.Unity"
   ],
   "includePlatforms": [

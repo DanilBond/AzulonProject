@@ -2,7 +2,8 @@
   "name": "Azulon.Configuration.Editor",
   "rootNamespace": "Azulon.Configuration.Editor",
   "references": [
-    "Azulon.Configuration"
+    "Azulon.Configuration",
+    "Azulon.Domain"
   ],
   "includePlatforms": [
     "Editor"
