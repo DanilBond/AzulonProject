@@ -16,3 +16,6 @@ MonoBehaviour:
   _questDefinitions:
   - {fileID: 11400000, guid: 07f199f074e115f4dad6634660642d43, type: 2}
   - {fileID: 11400000, guid: 6568490bde7a4934c91d3ed405678e38, type: 2}
+  - {fileID: 11400000, guid: 58fc611266e50104bbfa693a630259ae, type: 2}
+  - {fileID: 11400000, guid: 4d6bf2c57f7f36b43a50200a1f950171, type: 2}
+  - {fileID: 11400000, guid: 67f37ba26ee58b9479a3a15803d8c193, type: 2}

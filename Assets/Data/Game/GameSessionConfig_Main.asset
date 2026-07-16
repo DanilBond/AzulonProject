@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Game.GameSessionConfigAsset
   _itemCatalog: {fileID: 11400000, guid: fa51184f8c6514e42b918d5f6406b9c0, type: 2}
   _questCatalog: {fileID: 11400000, guid: 18f09fc887125db4ca7af64599e62070, type: 2}
-  _startingCoins: 4
-  _dailyCoinStipend: 4
+  _startingCoins: 8
+  _dailyCoinStipend: 8
   _visitorsPerDay: 3
   _offersPerVisitor: 3
   _rarityThresholds:

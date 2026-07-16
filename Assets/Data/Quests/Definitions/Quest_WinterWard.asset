@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213146615ae119347a9ad923d1daa972, type: 3}
+  m_Name: Quest_WinterWard
+  m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Quests.GuildQuestDefinition
+  _id: winter_ward
+  _displayName: Winter ward
+  _description: Gather weapons infused with the power of fire.
+  _rewardCoins: 10
+  _rewardReputation: 3
+  _requirements:
+  - {fileID: 11400000, guid: 2b2b32756933bbe4cbb73b9cc2033aad, type: 2}
+  - {fileID: 11400000, guid: 542d4a729b2746a4ba985a71536b5116, type: 2}
+  - {fileID: 11400000, guid: 3ffb9ea6875bac54090872918abb7789, type: 2}
+  - {fileID: 11400000, guid: b90c5614df1b49245afdd006cc8c79bf, type: 2}
