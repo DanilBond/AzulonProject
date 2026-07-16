@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Quests.GuildQuestDefinition
   _id: winter_ward
   _displayName: Winter ward
-  _description: Gather weapons infused with the power of fire.
+  _description: Assemble a frostbound collection protected by enchanted wards.
   _rewardCoins: 10
   _rewardReputation: 3
   _requirements:

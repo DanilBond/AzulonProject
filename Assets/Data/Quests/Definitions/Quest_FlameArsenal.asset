@@ -18,6 +18,7 @@ MonoBehaviour:
   _rewardCoins: 8
   _rewardReputation: 2
   _requirements:
+  - {fileID: 11400000, guid: 120d9fb33e6700f41b6fb35695a09537, type: 2}
+  - {fileID: 11400000, guid: 7fc6425869db1aa489c54c68f1387408, type: 2}
   - {fileID: 11400000, guid: f59429c5fb4513547877ea811faaeac7, type: 2}
   - {fileID: 11400000, guid: 0b4258e39390c8140be2ca1e793c2ec7, type: 2}
-  - {fileID: 11400000, guid: 7fc6425869db1aa489c54c68f1387408, type: 2}
