@@ -7,7 +7,8 @@
     "Azulon.Presentation",
     "Azulon.Configuration",
     "Azulon.Configuration.Editor",
-    "Azulon.Unity"
+    "Azulon.Unity",
+    "UnityEngine.UI"
   ],
   "includePlatforms": [
     "Editor"
