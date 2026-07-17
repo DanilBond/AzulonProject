@@ -40,7 +40,7 @@ namespace Azulon.Unity.UI
             _collectionToggle.onValueChanged.AddListener(HandleCollectionChanged);
             _inventoryToggle.onValueChanged.AddListener(HandleInventoryChanged);
             _questsToggle.onValueChanged.AddListener(HandleQuestsChanged);
-            Show(_initialPanel);
+            ApplyState(_initialPanel, true);
         }
 
         private void OnDestroy()
@@ -76,23 +76,47 @@ namespace Azulon.Unity.UI
                 throw new ArgumentOutOfRangeException(nameof(panel), panel, "Unknown side panel.");
             }
 
-            ApplyState(panel);
+            ApplyState(panel, false);
         }
 
         public void Close()
         {
-            ApplyState(GameSidePanel.None);
+            ApplyState(GameSidePanel.None, false);
         }
 
-        private void ApplyState(GameSidePanel panel)
+        private void ApplyState(GameSidePanel panel, bool instant)
         {
             CurrentPanel = panel;
-            _collectionPanel.SetActive(panel == GameSidePanel.Collection);
-            _inventoryPanel.SetActive(panel == GameSidePanel.Inventory);
-            _questsPanel.SetActive(panel == GameSidePanel.Quests);
+            SetPanelVisible(
+                _collectionPanel,
+                panel == GameSidePanel.Collection,
+                instant);
+            SetPanelVisible(
+                _inventoryPanel,
+                panel == GameSidePanel.Inventory,
+                instant);
+            SetPanelVisible(
+                _questsPanel,
+                panel == GameSidePanel.Quests,
+                instant);
             _collectionToggle.SetIsOnWithoutNotify(panel == GameSidePanel.Collection);
             _inventoryToggle.SetIsOnWithoutNotify(panel == GameSidePanel.Inventory);
             _questsToggle.SetIsOnWithoutNotify(panel == GameSidePanel.Quests);
+        }
+
+        private static void SetPanelVisible(
+            GameObject panel,
+            bool visible,
+            bool instant)
+        {
+            var animator = panel.GetComponent<UiVisibilityAnimator>();
+            if (animator != null)
+            {
+                animator.SetVisible(visible, instant);
+                return;
+            }
+
+            panel.SetActive(visible);
         }
 
         public bool TryValidateReferences(out string error)

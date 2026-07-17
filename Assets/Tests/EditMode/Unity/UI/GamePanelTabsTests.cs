@@ -110,6 +110,26 @@ namespace Azulon.Tests.EditMode.Unity.UI
             Assert.That(_questsToggle.isOn, Is.False);
         }
 
+        [Test]
+        public void ShowAndClose_WithAnimator_UpdatesAnimatedPanelState()
+        {
+            var animator = _collectionPanel.AddComponent<UiVisibilityAnimator>();
+            var serializedAnimator = new SerializedObject(animator);
+            serializedAnimator.FindProperty("_showDuration").floatValue = 0f;
+            serializedAnimator.FindProperty("_hideDuration").floatValue = 0f;
+            serializedAnimator.ApplyModifiedPropertiesWithoutUndo();
+
+            _tabs.Show(GameSidePanel.Collection);
+
+            Assert.That(animator.IsVisible, Is.True);
+            Assert.That(_collectionPanel.activeSelf, Is.True);
+
+            _tabs.Close();
+
+            Assert.That(animator.IsVisible, Is.False);
+            Assert.That(_collectionPanel.activeSelf, Is.False);
+        }
+
         private Toggle CreateToggle(string name)
         {
             var toggleObject = CreateChild(name);
@@ -120,7 +140,7 @@ namespace Azulon.Tests.EditMode.Unity.UI
 
         private GameObject CreateChild(string name)
         {
-            var child = new GameObject(name);
+            var child = new GameObject(name, typeof(RectTransform));
             child.transform.SetParent(_root.transform);
             return child;
         }

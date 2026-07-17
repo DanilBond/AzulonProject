@@ -11,6 +11,8 @@ namespace Azulon.Unity.UI.Views
 {
     public sealed class GameScreenView : MonoBehaviour
     {
+        private const float MarketOfferStaggerSeconds = 0.04f;
+
         [Header("Header")]
         [SerializeField] private TMP_Text _coinsText;
         [SerializeField] private TMP_Text _reputationText;
@@ -59,6 +61,12 @@ namespace Azulon.Unity.UI.Views
         private Action<MarketOfferId> _purchaseRequested;
         private Action<QuestId> _claimRequested;
         private Action _nextVisitorRequested;
+        private UiAutoHideAnimator _feedbackAutoHideAnimator;
+        private UiVisibilityAnimator _feedbackVisibilityAnimator;
+        private UiVisibilityAnimator _completionVisibilityAnimator;
+        private UiVisibilityAnimator _fatalErrorVisibilityAnimator;
+        private int _lastAnimatedDay = -1;
+        private int _lastAnimatedVisitor = -1;
 
         public void Initialize(
             Action<MarketOfferId> purchaseRequested,
@@ -72,9 +80,13 @@ namespace Azulon.Unity.UI.Views
             _nextVisitorRequested = nextVisitorRequested ??
                 throw new ArgumentNullException(nameof(nextVisitorRequested));
 
+            CacheAnimators();
             _nextVisitorButton.onClick.AddListener(HandleNextVisitorClicked);
-            _feedbackText.gameObject.SetActive(false);
-            _fatalErrorPanel.SetActive(false);
+            HideFeedback(true);
+            SetVisible(_completionOverlay, _completionVisibilityAnimator, false, true);
+            SetVisible(_fatalErrorPanel, _fatalErrorVisibilityAnimator, false, true);
+            _lastAnimatedDay = -1;
+            _lastAnimatedVisitor = -1;
         }
 
         public void Render(
@@ -108,7 +120,11 @@ namespace Azulon.Unity.UI.Views
             RenderQuests(viewData, contentCatalog);
 
             _nextVisitorButton.interactable = viewData.CanAdvanceVisitor;
-            _completionOverlay.SetActive(viewData.IsCompleted);
+            SetVisible(
+                _completionOverlay,
+                _completionVisibilityAnimator,
+                viewData.IsCompleted,
+                false);
         }
 
         public void ShowFeedback(GameFeedback feedback)
@@ -120,14 +136,35 @@ namespace Azulon.Unity.UI.Views
 
             _feedbackText.text = feedback.Message;
             _feedbackText.color = ResolveFeedbackColor(feedback.Tone);
-            _feedbackText.gameObject.SetActive(true);
+            if (_feedbackAutoHideAnimator != null)
+            {
+                _feedbackAutoHideAnimator.Play();
+            }
+            else if (_feedbackVisibilityAnimator != null)
+            {
+                _feedbackVisibilityAnimator.PlayEntrance();
+            }
+            else
+            {
+                _feedbackText.gameObject.SetActive(true);
+            }
         }
 
         public void ShowFatalError(string message)
         {
             if (_fatalErrorPanel != null)
             {
-                _fatalErrorPanel.SetActive(true);
+                if (_fatalErrorVisibilityAnimator == null)
+                {
+                    _fatalErrorVisibilityAnimator =
+                        _fatalErrorPanel.GetComponent<UiVisibilityAnimator>();
+                }
+
+                SetVisible(
+                    _fatalErrorPanel,
+                    _fatalErrorVisibilityAnimator,
+                    true,
+                    false);
             }
 
             if (_fatalErrorText != null)
@@ -209,6 +246,8 @@ namespace Azulon.Unity.UI.Views
             GameScreenViewData viewData,
             GameContentViewCatalog contentCatalog)
         {
+            var shouldAnimateOffers = _lastAnimatedDay != viewData.DayNumber ||
+                                      _lastAnimatedVisitor != viewData.VisitorNumber;
             EnsureMarketViewCount(viewData.Offers.Count);
             for (var index = 0; index < _marketOfferViews.Count; index++)
             {
@@ -225,7 +264,16 @@ namespace Azulon.Unity.UI.Views
                     offer,
                     contentCatalog.GetItemIcon(offer.Item.Id),
                     _purchaseRequested);
+
+                var animator = offerView.GetComponentInChildren<UiVisibilityAnimator>(true);
+                if (shouldAnimateOffers && animator != null)
+                {
+                    animator.PlayEntrance(index * MarketOfferStaggerSeconds);
+                }
             }
+
+            _lastAnimatedDay = viewData.DayNumber;
+            _lastAnimatedVisitor = viewData.VisitorNumber;
         }
 
         private void RenderInventory(
@@ -330,6 +378,48 @@ namespace Azulon.Unity.UI.Views
         private void HandleNextVisitorClicked()
         {
             _nextVisitorRequested?.Invoke();
+        }
+
+        private void CacheAnimators()
+        {
+            _feedbackAutoHideAnimator =
+                _feedbackText.GetComponent<UiAutoHideAnimator>();
+            _feedbackVisibilityAnimator =
+                _feedbackText.GetComponent<UiVisibilityAnimator>();
+            _completionVisibilityAnimator =
+                _completionOverlay.GetComponent<UiVisibilityAnimator>();
+            _fatalErrorVisibilityAnimator =
+                _fatalErrorPanel.GetComponent<UiVisibilityAnimator>();
+        }
+
+        private void HideFeedback(bool instant)
+        {
+            if (_feedbackAutoHideAnimator != null)
+            {
+                _feedbackAutoHideAnimator.Hide(instant);
+                return;
+            }
+
+            SetVisible(
+                _feedbackText.gameObject,
+                _feedbackVisibilityAnimator,
+                false,
+                instant);
+        }
+
+        private static void SetVisible(
+            GameObject target,
+            UiVisibilityAnimator animator,
+            bool visible,
+            bool instant)
+        {
+            if (animator != null)
+            {
+                animator.SetVisible(visible, instant);
+                return;
+            }
+
+            target.SetActive(visible);
         }
 
         private Color ResolveFeedbackColor(GameFeedbackTone tone)

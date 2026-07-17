@@ -4289,6 +4289,8 @@ GameObject:
   - component: {fileID: 904934144}
   - component: {fileID: 904934146}
   - component: {fileID: 904934145}
+  - component: {fileID: 904934148}
+  - component: {fileID: 904934147}
   m_Layer: 5
   m_Name: Quests
   m_TagString: Untagged
@@ -4356,6 +4358,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904934143}
   m_CullTransparentMesh: 1
+--- !u!114 &904934147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904934143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933bf4d90b674fd0821b0378b8120984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.UiVisibilityAnimator
+  _showDuration: 0.18
+  _hideDuration: 0.14
+  _hiddenOffset: {x: -90, y: 0}
+  _hiddenScale: 0.75
+  _showEase: 19
+  _hideEase: 19
+  _useUnscaledTime: 1
+  _disableWhenHidden: 1
+--- !u!225 &904934148
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904934143}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &926110657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4939,6 +4973,8 @@ GameObject:
   - component: {fileID: 1092747940}
   - component: {fileID: 1092747942}
   - component: {fileID: 1092747941}
+  - component: {fileID: 1092747944}
+  - component: {fileID: 1092747943}
   m_Layer: 5
   m_Name: Collections
   m_TagString: Untagged
@@ -5006,6 +5042,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1092747939}
   m_CullTransparentMesh: 1
+--- !u!114 &1092747943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092747939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933bf4d90b674fd0821b0378b8120984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.UiVisibilityAnimator
+  _showDuration: 0.18
+  _hideDuration: 0.14
+  _hiddenOffset: {x: -90, y: 0}
+  _hiddenScale: 0.75
+  _showEase: 19
+  _hideEase: 19
+  _useUnscaledTime: 1
+  _disableWhenHidden: 1
+--- !u!225 &1092747944
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092747939}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1093727046
 GameObject:
   m_ObjectHideFlags: 0
@@ -6365,6 +6433,8 @@ GameObject:
   - component: {fileID: 1595006289}
   - component: {fileID: 1595006291}
   - component: {fileID: 1595006290}
+  - component: {fileID: 1595006293}
+  - component: {fileID: 1595006292}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -6432,6 +6502,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595006288}
   m_CullTransparentMesh: 1
+--- !u!114 &1595006292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595006288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933bf4d90b674fd0821b0378b8120984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.UiVisibilityAnimator
+  _showDuration: 0.18
+  _hideDuration: 0.14
+  _hiddenOffset: {x: -90, y: 0}
+  _hiddenScale: 0.75
+  _showEase: 19
+  _hideEase: 19
+  _useUnscaledTime: 1
+  _disableWhenHidden: 1
+--- !u!225 &1595006293
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595006288}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1604682646
 GameObject:
   m_ObjectHideFlags: 0
@@ -6836,6 +6938,9 @@ GameObject:
   - component: {fileID: 1823481342}
   - component: {fileID: 1823481341}
   - component: {fileID: 1823481340}
+  - component: {fileID: 1823481345}
+  - component: {fileID: 1823481344}
+  - component: {fileID: 1823481343}
   m_Layer: 5
   m_Name: FeedbackText
   m_TagString: Untagged
@@ -6982,6 +7087,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823481338}
   m_CullTransparentMesh: 0
+--- !u!114 &1823481343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823481338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e96240df7e4dd9bcf5066285d28867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.UiAutoHideAnimator
+  _visibleDuration: 1.6
+  _useUnscaledTime: 1
+--- !u!114 &1823481344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823481338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933bf4d90b674fd0821b0378b8120984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.UiVisibilityAnimator
+  _showDuration: 0.18
+  _hideDuration: 0.14
+  _hiddenOffset: {x: 24, y: 0}
+  _hiddenScale: 0.98
+  _showEase: 9
+  _hideEase: 8
+  _useUnscaledTime: 1
+  _disableWhenHidden: 1
+--- !u!225 &1823481345
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823481338}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1880934331
 GameObject:
   m_ObjectHideFlags: 0
