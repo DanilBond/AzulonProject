@@ -16,13 +16,15 @@ namespace Azulon.Configuration.Game
         [SerializeField] private ItemCatalogAsset _itemCatalog;
         [SerializeField] private GuildQuestCatalogAsset _questCatalog;
 
+        [Header("Visitor Visuals")]
+        [SerializeField] private List<Sprite> _visitorSprites = new List<Sprite>();
+
         [Header("Economy")]
         [SerializeField, Min(0)] private int _startingCoins = 8;
         [SerializeField, Min(1)] private int _dailyCoinStipend = 4;
 
         [Header("Market Loop")]
         [SerializeField, Min(1)] private int _visitorsPerDay = 3;
-        [SerializeField, Min(1)] private int _offersPerVisitor = 3;
 
         [Header("Reputation Progression")]
         [SerializeField] private List<RarityUnlockThresholdConfig> _rarityThresholds =
@@ -39,13 +41,13 @@ namespace Azulon.Configuration.Game
 
         public GuildQuestCatalogAsset QuestCatalog => _questCatalog;
 
+        public IReadOnlyList<Sprite> VisitorSprites => _visitorSprites;
+
         public int StartingCoins => _startingCoins;
 
         public int DailyCoinStipend => _dailyCoinStipend;
 
         public int VisitorsPerDay => _visitorsPerDay;
-
-        public int OffersPerVisitor => _offersPerVisitor;
 
         public IReadOnlyList<RarityUnlockThresholdConfig> RarityThresholds => _rarityThresholds;
     }

@@ -12,7 +12,6 @@ namespace Azulon.Application.Gameplay
             int startingCoins,
             int dailyCoinStipend,
             int visitorsPerDay,
-            int offersPerVisitor,
             IEnumerable<RarityUnlockThreshold> rarityThresholds)
         {
             if (startingCoins < 0)
@@ -36,13 +35,6 @@ namespace Azulon.Application.Gameplay
                     "Visitors per day must be greater than zero.");
             }
 
-            if (offersPerVisitor <= 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(offersPerVisitor),
-                    "Offers per visitor must be greater than zero.");
-            }
-
             if (rarityThresholds == null)
             {
                 throw new ArgumentNullException(nameof(rarityThresholds));
@@ -55,7 +47,6 @@ namespace Azulon.Application.Gameplay
             StartingCoins = startingCoins;
             DailyCoinStipend = dailyCoinStipend;
             VisitorsPerDay = visitorsPerDay;
-            OffersPerVisitor = offersPerVisitor;
         }
 
         public int StartingCoins { get; }
@@ -63,8 +54,6 @@ namespace Azulon.Application.Gameplay
         public int DailyCoinStipend { get; }
 
         public int VisitorsPerDay { get; }
-
-        public int OffersPerVisitor { get; }
 
         public IReadOnlyList<RarityUnlockThreshold> RarityThresholds => _rarityThresholds;
 

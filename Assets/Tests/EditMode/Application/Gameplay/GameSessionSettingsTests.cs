@@ -17,12 +17,11 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                 new RarityUnlockThreshold(ItemRarity.Uncommon, 2)
             };
 
-            var settings = new GameSessionSettings(5, 3, 2, 4, source);
+            var settings = new GameSessionSettings(5, 3, 2, source);
 
             Assert.That(settings.StartingCoins, Is.EqualTo(5));
             Assert.That(settings.DailyCoinStipend, Is.EqualTo(3));
             Assert.That(settings.VisitorsPerDay, Is.EqualTo(2));
-            Assert.That(settings.OffersPerVisitor, Is.EqualTo(4));
             Assert.That(settings.RarityThresholds.Count, Is.EqualTo(2));
             Assert.That(settings.RarityThresholds[1].RequiredReputation, Is.EqualTo(2));
         }
@@ -35,7 +34,6 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                     5,
                     0,
                     2,
-                    3,
                     CreateCommonThreshold()),
                 Throws.TypeOf<ArgumentOutOfRangeException>());
         }
@@ -48,7 +46,6 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                     5,
                     2,
                     2,
-                    3,
                     new[]
                     {
                         new RarityUnlockThreshold(ItemRarity.Common, 0),

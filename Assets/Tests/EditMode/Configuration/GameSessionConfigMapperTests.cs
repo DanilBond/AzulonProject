@@ -38,7 +38,6 @@ namespace Azulon.Tests.EditMode.Configuration
             Assert.That(settings.StartingCoins, Is.EqualTo(4));
             Assert.That(settings.DailyCoinStipend, Is.EqualTo(3));
             Assert.That(settings.VisitorsPerDay, Is.EqualTo(2));
-            Assert.That(settings.OffersPerVisitor, Is.EqualTo(3));
             Assert.That(settings.RarityThresholds.Count, Is.EqualTo(2));
         }
 
@@ -54,7 +53,7 @@ namespace Azulon.Tests.EditMode.Configuration
                 config,
                 new FirstItemRandomSource(),
                 new SequentialMarketOfferIdSource());
-            var purchase = session.PurchaseOffer(session.CurrentOffers.Offers[0].Id);
+            var purchase = session.PurchaseOffer(session.CurrentOffer.Id);
             var claim = session.ClaimQuest(new QuestId(context.Quest.Id));
 
             Assert.That(purchase.Succeeded, Is.True);

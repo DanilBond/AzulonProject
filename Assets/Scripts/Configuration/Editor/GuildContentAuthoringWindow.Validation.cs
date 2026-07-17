@@ -22,7 +22,8 @@ namespace Azulon.Configuration.Editor
                     $"All content is valid. " +
                     $"{ItemCatalog.TagDefinitions.Count} tag(s), " +
                     $"{ItemCatalog.ItemDefinitions.Count} item(s), " +
-                    $"{QuestCatalog.QuestDefinitions.Count} quest(s).",
+                    $"{QuestCatalog.QuestDefinitions.Count} quest(s), " +
+                    $"{_configuration.VisitorSprites.Count} visitor sprite(s).",
                     MessageType.Info);
             }
 

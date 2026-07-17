@@ -3,6 +3,7 @@ using Azulon.Configuration.Game.Validation;
 using Azulon.Domain.Items;
 using Azulon.Domain.Progression;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Azulon.Tests.EditMode.Configuration
 {
@@ -70,7 +71,7 @@ namespace Azulon.Tests.EditMode.Configuration
                 4,
                 3,
                 2,
-                3,
+                marketContext.VisitorSprites,
                 new RarityUnlockThreshold(ItemRarity.Common, 0));
 
             var result = GameSessionConfigValidator.Validate(config);
@@ -94,6 +95,50 @@ namespace Azulon.Tests.EditMode.Configuration
             Assert.That(result.IsValid, Is.False);
             Assert.That(
                 result.Issues.Any(issue => issue.Message.Contains("contiguous sequence")),
+                Is.True);
+        }
+
+        [Test]
+        public void Validate_WithFewerThanTwoVisitorSprites_ReportsVisualError()
+        {
+            var context = new GameSessionConfigTestContext(_factory);
+            var config = _factory.CreateGameSessionConfig(
+                context.ItemCatalog,
+                context.QuestCatalog,
+                4,
+                3,
+                2,
+                new Sprite[0],
+                new RarityUnlockThreshold(ItemRarity.Common, 0));
+
+            var result = GameSessionConfigValidator.Validate(config);
+
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(
+                result.Issues.Any(issue =>
+                    issue.Message.Contains("At least two visitor sprites")),
+                Is.True);
+        }
+
+        [Test]
+        public void Validate_WithDuplicateVisitorSprite_ReportsVisualError()
+        {
+            var context = new GameSessionConfigTestContext(_factory);
+            var sprite = _factory.CreateIcon();
+            var config = _factory.CreateGameSessionConfig(
+                context.ItemCatalog,
+                context.QuestCatalog,
+                4,
+                3,
+                2,
+                new[] { sprite, sprite },
+                new RarityUnlockThreshold(ItemRarity.Common, 0));
+
+            var result = GameSessionConfigValidator.Validate(config);
+
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(
+                result.Issues.Any(issue => issue.Message.Contains("duplicated")),
                 Is.True);
         }
     }

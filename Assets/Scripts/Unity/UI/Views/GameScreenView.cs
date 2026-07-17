@@ -11,7 +11,7 @@ namespace Azulon.Unity.UI.Views
 {
     public sealed class GameScreenView : MonoBehaviour
     {
-        private const float MarketOfferStaggerSeconds = 0.04f;
+        private const float OfferEntranceDelaySeconds = 0.06f;
 
         [Header("Header")]
         [SerializeField] private TMP_Text _coinsText;
@@ -50,8 +50,6 @@ namespace Azulon.Unity.UI.Views
         [SerializeField] private GameObject _fatalErrorPanel;
         [SerializeField] private TMP_Text _fatalErrorText;
 
-        private readonly List<MarketOfferView> _marketOfferViews =
-            new List<MarketOfferView>();
         private readonly List<InventoryItemView> _inventoryItemViews =
             new List<InventoryItemView>();
         private readonly List<CollectionItemView> _collectionItemViews =
@@ -65,6 +63,7 @@ namespace Azulon.Unity.UI.Views
         private UiVisibilityAnimator _feedbackVisibilityAnimator;
         private UiVisibilityAnimator _completionVisibilityAnimator;
         private UiVisibilityAnimator _fatalErrorVisibilityAnimator;
+        private MarketOfferView _marketOfferView;
         private int _lastAnimatedDay = -1;
         private int _lastAnimatedVisitor = -1;
 
@@ -114,10 +113,15 @@ namespace Azulon.Unity.UI.Views
             _questProgressText.text =
                 $"Tasks: {viewData.ClaimedQuestCount} / {viewData.QuestCount}";
 
-            RenderMarket(viewData, contentCatalog);
+            var isNewVisitor = _lastAnimatedDay != viewData.DayNumber ||
+                               _lastAnimatedVisitor != viewData.VisitorNumber;
+            RenderMarket(viewData, contentCatalog, isNewVisitor);
             RenderCollection(viewData, contentCatalog);
             RenderInventory(viewData, contentCatalog);
             RenderQuests(viewData, contentCatalog);
+
+            _lastAnimatedDay = viewData.DayNumber;
+            _lastAnimatedVisitor = viewData.VisitorNumber;
 
             _nextVisitorButton.interactable = viewData.CanAdvanceVisitor;
             SetVisible(
@@ -244,36 +248,24 @@ namespace Azulon.Unity.UI.Views
 
         private void RenderMarket(
             GameScreenViewData viewData,
-            GameContentViewCatalog contentCatalog)
+            GameContentViewCatalog contentCatalog,
+            bool animate)
         {
-            var shouldAnimateOffers = _lastAnimatedDay != viewData.DayNumber ||
-                                      _lastAnimatedVisitor != viewData.VisitorNumber;
-            EnsureMarketViewCount(viewData.Offers.Count);
-            for (var index = 0; index < _marketOfferViews.Count; index++)
+            EnsureMarketView();
+            var offer = viewData.Offer;
+            _marketOfferView.Bind(
+                offer,
+                contentCatalog.GetItemIcon(offer.Item.Id),
+                _purchaseRequested);
+
+            if (!animate)
             {
-                var offerView = _marketOfferViews[index];
-                var isUsed = index < viewData.Offers.Count;
-                offerView.gameObject.SetActive(isUsed);
-                if (!isUsed)
-                {
-                    continue;
-                }
-
-                var offer = viewData.Offers[index];
-                offerView.Bind(
-                    offer,
-                    contentCatalog.GetItemIcon(offer.Item.Id),
-                    _purchaseRequested);
-
-                var animator = offerView.GetComponentInChildren<UiVisibilityAnimator>(true);
-                if (shouldAnimateOffers && animator != null)
-                {
-                    animator.PlayEntrance(index * MarketOfferStaggerSeconds);
-                }
+                return;
             }
 
-            _lastAnimatedDay = viewData.DayNumber;
-            _lastAnimatedVisitor = viewData.VisitorNumber;
+            var animator =
+                _marketOfferView.GetComponentInChildren<UiVisibilityAnimator>(true);
+            animator?.PlayEntrance(OfferEntranceDelaySeconds);
         }
 
         private void RenderInventory(
@@ -341,11 +333,11 @@ namespace Azulon.Unity.UI.Views
             }
         }
 
-        private void EnsureMarketViewCount(int requiredCount)
+        private void EnsureMarketView()
         {
-            while (_marketOfferViews.Count < requiredCount)
+            if (_marketOfferView == null)
             {
-                _marketOfferViews.Add(Instantiate(_marketOfferPrefab, _marketContent));
+                _marketOfferView = Instantiate(_marketOfferPrefab, _marketContent);
             }
         }
 

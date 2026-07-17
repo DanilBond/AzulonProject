@@ -125,7 +125,8 @@ namespace Azulon.Configuration.Editor
             return $"Guild Relic Market content is valid: " +
                    $"{itemCatalog.TagDefinitions.Count} tag(s), " +
                    $"{itemCatalog.ItemDefinitions.Count} item(s), " +
-                   $"{questCatalog.QuestDefinitions.Count} quest(s).";
+                   $"{questCatalog.QuestDefinitions.Count} quest(s), " +
+                   $"{configuration.VisitorSprites.Count} visitor sprite(s).";
         }
 
         private static string BuildFailureMessage(ContentValidationReport report)

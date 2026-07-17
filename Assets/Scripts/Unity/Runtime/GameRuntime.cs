@@ -58,7 +58,8 @@ namespace Azulon.Unity.Runtime
                 var viewData = Presenter.CreateViewData();
                 Debug.Log(
                     $"Guild Relic Market initialized: day {viewData.DayNumber}, " +
-                    $"visitor {viewData.VisitorNumber}, {viewData.Offers.Count} offer(s).",
+                    $"visitor {viewData.VisitorNumber}, " +
+                    $"offer '{viewData.Offer.Item.DisplayName}'.",
                     this);
                 return true;
             }

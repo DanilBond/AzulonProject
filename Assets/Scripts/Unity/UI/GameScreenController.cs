@@ -4,6 +4,7 @@ using Azulon.Domain.Quests;
 using Azulon.Presentation.Gameplay;
 using Azulon.Unity.Runtime;
 using Azulon.Unity.UI.Views;
+using Azulon.Unity.World;
 using UnityEngine;
 
 namespace Azulon.Unity.UI
@@ -13,6 +14,7 @@ namespace Azulon.Unity.UI
     {
         [SerializeField] private GameRuntime _runtime;
         [SerializeField] private GameScreenView _view;
+        [SerializeField] private VisitorView _visitorView;
 
         private GameSessionPresenter _presenter;
         private GameContentViewCatalog _contentCatalog;
@@ -37,6 +39,18 @@ namespace Azulon.Unity.UI
                 return;
             }
 
+            if (_visitorView == null)
+            {
+                Fail("Game screen has no world visitor view assigned.");
+                return;
+            }
+
+            if (!_visitorView.TryValidateReferences(out validationError))
+            {
+                Fail(validationError);
+                return;
+            }
+
             if (!_runtime.TryInitialize())
             {
                 Fail(_runtime.InitializationError);
@@ -51,7 +65,7 @@ namespace Azulon.Unity.UI
                     HandlePurchaseRequested,
                     HandleClaimRequested,
                     HandleNextVisitorRequested);
-                _view.Render(_presenter.CreateViewData(), _contentCatalog);
+                RenderScene(_presenter.CreateViewData());
             }
             catch (Exception exception)
             {
@@ -87,13 +101,23 @@ namespace Azulon.Unity.UI
             try
             {
                 var viewData = _presenter.CreateViewData();
-                _view.Render(viewData, _contentCatalog);
+                RenderScene(viewData);
                 _view.ShowFeedback(GameFeedbackFormatter.Format(result, viewData));
             }
             catch (Exception exception)
             {
                 Fail(exception.Message, exception);
             }
+        }
+
+        private void RenderScene(GameScreenViewData viewData)
+        {
+            _visitorView.Bind(
+                _contentCatalog.GetVisitorSprite(
+                    viewData.DayNumber,
+                    viewData.VisitorNumber,
+                    viewData.VisitorsPerDay));
+            _view.Render(viewData, _contentCatalog);
         }
 
         private void Fail(string message, Exception exception = null)

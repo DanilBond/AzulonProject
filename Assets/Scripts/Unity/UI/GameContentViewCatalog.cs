@@ -13,6 +13,7 @@ namespace Azulon.Unity.UI
     {
         private readonly Dictionary<ItemId, ItemDefinition> _itemsById;
         private readonly Dictionary<QuestId, GuildQuestDefinition> _questsById;
+        private readonly IReadOnlyList<Sprite> _visitorSprites;
 
         public GameContentViewCatalog(GameSessionConfigAsset configuration)
         {
@@ -33,6 +34,7 @@ namespace Azulon.Unity.UI
 
             _itemsById = BuildItemLookup(configuration.ItemCatalog.ItemDefinitions);
             _questsById = BuildQuestLookup(configuration.QuestCatalog.QuestDefinitions);
+            _visitorSprites = BuildVisitorSprites(configuration.VisitorSprites);
         }
 
         public Sprite GetItemIcon(ItemId itemId)
@@ -60,6 +62,31 @@ namespace Azulon.Unity.UI
             }
 
             return quest.Requirements[requirementIndex].DisplayName;
+        }
+
+        public Sprite GetVisitorSprite(
+            int dayNumber,
+            int visitorNumber,
+            int visitorsPerDay)
+        {
+            if (dayNumber <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dayNumber));
+            }
+
+            if (visitorsPerDay <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(visitorsPerDay));
+            }
+
+            if (visitorNumber <= 0 || visitorNumber > visitorsPerDay)
+            {
+                throw new ArgumentOutOfRangeException(nameof(visitorNumber));
+            }
+
+            var visitorIndex =
+                ((long)dayNumber - 1L) * visitorsPerDay + visitorNumber - 1L;
+            return _visitorSprites[(int)(visitorIndex % _visitorSprites.Count)];
         }
 
         private static Dictionary<ItemId, ItemDefinition> BuildItemLookup(
@@ -106,6 +133,38 @@ namespace Azulon.Unity.UI
             }
 
             return lookup;
+        }
+
+        private static IReadOnlyList<Sprite> BuildVisitorSprites(
+            IReadOnlyList<Sprite> sprites)
+        {
+            if (sprites == null || sprites.Count < 2)
+            {
+                throw new InvalidOperationException(
+                    "Visitor visual catalog must contain at least two sprites.");
+            }
+
+            var uniqueSprites = new HashSet<Sprite>();
+            var result = new List<Sprite>(sprites.Count);
+            for (var index = 0; index < sprites.Count; index++)
+            {
+                var sprite = sprites[index];
+                if (sprite == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Visitor visual catalog contains a missing sprite at index {index}.");
+                }
+
+                if (!uniqueSprites.Add(sprite))
+                {
+                    throw new InvalidOperationException(
+                        $"Visitor visual catalog contains a duplicate sprite at index {index}.");
+                }
+
+                result.Add(sprite);
+            }
+
+            return result.AsReadOnly();
         }
     }
 }

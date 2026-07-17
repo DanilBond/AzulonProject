@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using Azulon.Configuration.Game;
 using Azulon.Configuration.Items;
 using Azulon.Configuration.Quests;
 using Azulon.Domain.Items;
 using Azulon.Domain.Progression;
+using UnityEngine;
 
 namespace Azulon.Tests.EditMode.Configuration
 {
@@ -37,6 +39,7 @@ namespace Azulon.Tests.EditMode.Configuration
                 1,
                 requirement);
             QuestCatalog = factory.CreateQuestCatalog(ItemCatalog, Quest);
+            VisitorSprites = new[] { factory.CreateIcon(), factory.CreateIcon() };
         }
 
         public ItemDefinition Item { get; }
@@ -47,6 +50,8 @@ namespace Azulon.Tests.EditMode.Configuration
 
         public GuildQuestCatalogAsset QuestCatalog { get; }
 
+        public IReadOnlyList<Sprite> VisitorSprites { get; }
+
         public GameSessionConfigAsset CreateConfig(params RarityUnlockThreshold[] thresholds)
         {
             return _factory.CreateGameSessionConfig(
@@ -55,7 +60,7 @@ namespace Azulon.Tests.EditMode.Configuration
                 4,
                 3,
                 2,
-                3,
+                VisitorSprites,
                 thresholds);
         }
     }

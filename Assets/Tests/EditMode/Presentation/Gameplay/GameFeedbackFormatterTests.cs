@@ -19,7 +19,7 @@ namespace Azulon.Tests.EditMode.Presentation.Gameplay
         [Test]
         public void Format_AfterPurchase_UsesItemNameAndCoinDelta()
         {
-            var offerId = _presenter.CreateViewData().Offers[0].OfferId;
+            var offerId = _presenter.CreateViewData().Offer.OfferId;
             var result = _presenter.PurchaseOffer(offerId);
 
             var feedback = GameFeedbackFormatter.Format(
@@ -34,7 +34,7 @@ namespace Azulon.Tests.EditMode.Presentation.Gameplay
         [Test]
         public void Format_AfterQuestClaim_ListsBothRewards()
         {
-            var offerId = _presenter.CreateViewData().Offers[0].OfferId;
+            var offerId = _presenter.CreateViewData().Offer.OfferId;
             _presenter.PurchaseOffer(offerId);
             var result = _presenter.ClaimQuest(_context.EmberCommission.Id);
 

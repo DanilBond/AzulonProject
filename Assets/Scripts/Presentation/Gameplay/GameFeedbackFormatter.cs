@@ -107,12 +107,9 @@ namespace Azulon.Presentation.Gameplay
 
         private static string FindItemName(GameScreenViewData viewData, ItemId itemId)
         {
-            foreach (var offer in viewData.Offers)
+            if (viewData.Offer.Item.Id == itemId)
             {
-                if (offer.Item.Id == itemId)
-                {
-                    return offer.Item.DisplayName;
-                }
+                return viewData.Offer.Item.DisplayName;
             }
 
             foreach (var inventoryItem in viewData.InventoryItems)

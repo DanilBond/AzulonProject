@@ -6,7 +6,6 @@ namespace Azulon.Presentation.Gameplay
 {
     public sealed class GameScreenViewData
     {
-        private readonly IReadOnlyList<MarketOfferViewData> _offers;
         private readonly IReadOnlyList<InventoryItemViewData> _inventoryItems;
         private readonly IReadOnlyList<CollectionItemViewData> _collectionItems;
         private readonly IReadOnlyList<QuestViewData> _quests;
@@ -24,14 +23,14 @@ namespace Azulon.Presentation.Gameplay
             int uniqueOwnedItemCount,
             int claimedQuestCount,
             bool isCompleted,
-            IEnumerable<MarketOfferViewData> offers,
+            MarketOfferViewData offer,
             IEnumerable<InventoryItemViewData> inventoryItems,
             IEnumerable<CollectionItemViewData> collectionItems,
             IEnumerable<QuestViewData> quests)
         {
-            if (offers == null)
+            if (offer == null)
             {
-                throw new ArgumentNullException(nameof(offers));
+                throw new ArgumentNullException(nameof(offer));
             }
 
             if (inventoryItems == null)
@@ -61,7 +60,7 @@ namespace Azulon.Presentation.Gameplay
             UniqueOwnedItemCount = uniqueOwnedItemCount;
             ClaimedQuestCount = claimedQuestCount;
             IsCompleted = isCompleted;
-            _offers = new List<MarketOfferViewData>(offers).AsReadOnly();
+            Offer = offer;
             _inventoryItems = new List<InventoryItemViewData>(inventoryItems).AsReadOnly();
             _collectionItems = new List<CollectionItemViewData>(collectionItems).AsReadOnly();
             _quests = new List<QuestViewData>(quests).AsReadOnly();
@@ -98,7 +97,7 @@ namespace Azulon.Presentation.Gameplay
 
         public bool CanAdvanceVisitor => !IsCompleted;
 
-        public IReadOnlyList<MarketOfferViewData> Offers => _offers;
+        public MarketOfferViewData Offer { get; }
 
         public IReadOnlyList<InventoryItemViewData> InventoryItems => _inventoryItems;
 

@@ -29,7 +29,6 @@ namespace Azulon.Configuration.Game
                 configAsset.StartingCoins,
                 configAsset.DailyCoinStipend,
                 configAsset.VisitorsPerDay,
-                configAsset.OffersPerVisitor,
                 thresholds);
         }
     }

@@ -18,10 +18,9 @@ namespace Azulon.Domain.Market
             _offerIdSource = offerIdSource ?? throw new ArgumentNullException(nameof(offerIdSource));
         }
 
-        public MarketOfferSet Generate(
+        public MarketOffer Generate(
             ItemCatalog catalog,
-            ItemRarity maximumUnlockedRarity,
-            int requestedOfferCount)
+            ItemRarity maximumUnlockedRarity)
         {
             if (catalog == null)
             {
@@ -31,13 +30,6 @@ namespace Azulon.Domain.Market
             if (!Enum.IsDefined(typeof(ItemRarity), maximumUnlockedRarity))
             {
                 throw new ArgumentOutOfRangeException(nameof(maximumUnlockedRarity));
-            }
-
-            if (requestedOfferCount <= 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(requestedOfferCount),
-                    "Requested offer count must be greater than zero.");
             }
 
             var eligibleItems = new List<ItemData>();
@@ -55,23 +47,14 @@ namespace Azulon.Domain.Market
                     $"Catalog has no items available at rarity '{maximumUnlockedRarity}' or below.");
             }
 
-            var generatedCount = Math.Min(requestedOfferCount, eligibleItems.Count);
-            var offers = new List<MarketOffer>(generatedCount);
-            for (var index = 0; index < generatedCount; index++)
+            var selectedIndex = _randomSource.NextIndex(eligibleItems.Count);
+            if (selectedIndex < 0 || selectedIndex >= eligibleItems.Count)
             {
-                var selectedIndex = _randomSource.NextIndex(eligibleItems.Count);
-                if (selectedIndex < 0 || selectedIndex >= eligibleItems.Count)
-                {
-                    throw new InvalidOperationException(
-                        $"Random source returned index {selectedIndex} for a pool of {eligibleItems.Count} items.");
-                }
-
-                var selectedItem = eligibleItems[selectedIndex];
-                eligibleItems.RemoveAt(selectedIndex);
-                offers.Add(new MarketOffer(_offerIdSource.NextId(), selectedItem));
+                throw new InvalidOperationException(
+                    $"Random source returned index {selectedIndex} for a pool of {eligibleItems.Count} items.");
             }
 
-            return new MarketOfferSet(offers);
+            return new MarketOffer(_offerIdSource.NextId(), eligibleItems[selectedIndex]);
         }
     }
 }

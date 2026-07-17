@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Game.GameSessionConfigAsset
   _itemCatalog: {fileID: 11400000, guid: fa51184f8c6514e42b918d5f6406b9c0, type: 2}
   _questCatalog: {fileID: 11400000, guid: 18f09fc887125db4ca7af64599e62070, type: 2}
+  _visitorSprites:
+  - {fileID: 21300000, guid: 86e0742ca8b6b0f4ca0e6080e82f441c, type: 3}
+  - {fileID: 21300000, guid: c5cde321110314fd7bfa6b1fd5810597, type: 3}
   _startingCoins: 8
   _dailyCoinStipend: 8
   _visitorsPerDay: 3
-  _offersPerVisitor: 3
   _rarityThresholds:
   - _rarity: 0
     _requiredReputation: 0

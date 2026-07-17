@@ -58,7 +58,7 @@ namespace Azulon.Application.Gameplay
             _questStates = questStates.AsReadOnly();
             DayNumber = 1;
             VisitorNumber = 1;
-            CurrentOffers = GenerateOffers();
+            CurrentOffer = GenerateOffer();
         }
 
         public GameSessionSettings Settings => _settings;
@@ -67,7 +67,7 @@ namespace Azulon.Application.Gameplay
 
         public IReadOnlyList<GuildQuestState> QuestStates => _questStates;
 
-        public MarketOfferSet CurrentOffers { get; private set; }
+        public MarketOffer CurrentOffer { get; private set; }
 
         public int DayNumber { get; private set; }
 
@@ -117,13 +117,13 @@ namespace Azulon.Application.Gameplay
                 throw new ArgumentException("Market offer ID cannot be empty.", nameof(offerId));
             }
 
-            if (!CurrentOffers.TryGetOffer(offerId, out var offer))
+            if (CurrentOffer.Id != offerId)
             {
                 throw new KeyNotFoundException(
                     $"Current visitor does not have market offer '{offerId}'.");
             }
 
-            return _purchaseService.Purchase(offer, _wallet, _inventory);
+            return _purchaseService.Purchase(CurrentOffer, _wallet, _inventory);
         }
 
         public QuestEvaluation EvaluateQuest(QuestId questId)
@@ -170,7 +170,7 @@ namespace Azulon.Application.Gameplay
                 throw new OverflowException("Daily stipend exceeds the supported wallet range.");
             }
 
-            var nextOffers = GenerateOffers();
+            var nextOffer = GenerateOffer();
             var creditedCoins = 0;
             if (startsNewDay)
             {
@@ -180,7 +180,7 @@ namespace Azulon.Application.Gameplay
 
             DayNumber = nextDayNumber;
             VisitorNumber = nextVisitorNumber;
-            CurrentOffers = nextOffers;
+            CurrentOffer = nextOffer;
 
             return new VisitorAdvanceResult(
                 startsNewDay,
@@ -190,12 +190,11 @@ namespace Azulon.Application.Gameplay
                 _wallet.Balance);
         }
 
-        private MarketOfferSet GenerateOffers()
+        private MarketOffer GenerateOffer()
         {
             return _offerGenerator.Generate(
                 _itemCatalog,
-                _progression.MaximumUnlockedRarity,
-                _settings.OffersPerVisitor);
+                _progression.MaximumUnlockedRarity);
         }
 
         private GuildQuestState GetQuestState(QuestId questId)

@@ -19,7 +19,7 @@ namespace Azulon.Presentation.Gameplay
 
         public GameScreenViewData CreateViewData()
         {
-            var offers = CreateOfferViews();
+            var offer = CreateOfferView();
             var inventoryItems = CreateInventoryViews();
             var collectionItems = CreateCollectionViews();
             var quests = CreateQuestViews(out var claimedQuestCount);
@@ -38,7 +38,7 @@ namespace Azulon.Presentation.Gameplay
                 _session.UniqueOwnedItemCount,
                 claimedQuestCount,
                 _session.IsCompleted,
-                offers,
+                offer,
                 inventoryItems,
                 collectionItems,
                 quests);
@@ -54,12 +54,12 @@ namespace Azulon.Presentation.Gameplay
                     sessionCompleted: true);
             }
 
-            if (offerId.IsEmpty ||
-                !_session.CurrentOffers.TryGetOffer(offerId, out var offer))
+            if (offerId.IsEmpty || _session.CurrentOffer.Id != offerId)
             {
                 return new GameActionResult(GameActionOutcome.OfferUnavailable, offerId);
             }
 
+            var offer = _session.CurrentOffer;
             var purchase = _session.PurchaseOffer(offerId);
             switch (purchase.Status)
             {
@@ -149,21 +149,16 @@ namespace Azulon.Presentation.Gameplay
                 coinDelta: advance.CreditedCoins);
         }
 
-        private IReadOnlyList<MarketOfferViewData> CreateOfferViews()
+        private MarketOfferViewData CreateOfferView()
         {
-            var offers = new List<MarketOfferViewData>(_session.CurrentOffers.Offers.Count);
-            foreach (var offer in _session.CurrentOffers.Offers)
-            {
-                offers.Add(new MarketOfferViewData(
-                    offer.Id,
-                    CreateItemView(offer.Item),
-                    offer.IsPurchased,
-                    !_session.IsCompleted &&
-                    !offer.IsPurchased &&
-                    _session.Coins >= offer.Price));
-            }
-
-            return offers.AsReadOnly();
+            var offer = _session.CurrentOffer;
+            return new MarketOfferViewData(
+                offer.Id,
+                CreateItemView(offer.Item),
+                offer.IsPurchased,
+                !_session.IsCompleted &&
+                !offer.IsPurchased &&
+                _session.Coins >= offer.Price);
         }
 
         private IReadOnlyList<InventoryItemViewData> CreateInventoryViews()

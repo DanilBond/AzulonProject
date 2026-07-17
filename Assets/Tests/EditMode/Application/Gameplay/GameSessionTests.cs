@@ -23,11 +23,10 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
 
             Assert.That(session.DayNumber, Is.EqualTo(1));
             Assert.That(session.VisitorNumber, Is.EqualTo(1));
-            Assert.That(session.CurrentOffers.Offers.Count, Is.EqualTo(1));
-            Assert.That(session.CurrentOffers.Offers[0].Item.Id, Is.EqualTo(_context.EmberBlade.Id));
+            Assert.That(session.CurrentOffer.Item.Id, Is.EqualTo(_context.EmberBlade.Id));
             Assert.That(session.MaximumUnlockedRarity, Is.EqualTo(ItemRarity.Common));
 
-            var firstPurchase = session.PurchaseOffer(session.CurrentOffers.Offers[0].Id);
+            var firstPurchase = session.PurchaseOffer(session.CurrentOffer.Id);
             var commissionProgress = session.EvaluateQuest(_context.EmberCommission.Id);
             var commissionClaim = session.ClaimQuest(_context.EmberCommission.Id);
 
@@ -39,12 +38,9 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
             Assert.That(session.MaximumUnlockedRarity, Is.EqualTo(ItemRarity.Uncommon));
 
             session.AdvanceToNextVisitor();
-            var uncommonOffer = GameSessionTestContext.FindOffer(session, _context.FlameOrb.Id);
+            var uncommonOffer = session.CurrentOffer;
 
-            Assert.That(uncommonOffer, Is.Not.Null);
-            Assert.That(
-                GameSessionTestContext.FindOffer(session, _context.PhoenixSeal.Id),
-                Is.Null);
+            Assert.That(uncommonOffer.Item.Id, Is.EqualTo(_context.FlameOrb.Id));
 
             session.PurchaseOffer(uncommonOffer.Id);
             var synergyProgress = session.EvaluateQuest(_context.FlameArsenal.Id);
@@ -82,7 +78,7 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
         public void PurchaseOffer_FromPreviousVisitor_IsRejectedWithoutMutation()
         {
             var session = _context.CreateSession();
-            var previousOfferId = session.CurrentOffers.Offers[0].Id;
+            var previousOfferId = session.CurrentOffer.Id;
             session.AdvanceToNextVisitor();
 
             Assert.That(

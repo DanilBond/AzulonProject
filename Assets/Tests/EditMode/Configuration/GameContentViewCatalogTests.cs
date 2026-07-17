@@ -40,6 +40,9 @@ namespace Azulon.Tests.EditMode.Configuration
             Assert.That(
                 catalog.GetRequirementDisplayName(new QuestId(_context.Quest.Id), 0),
                 Is.EqualTo("Ember Blade"));
+            Assert.That(
+                catalog.GetVisitorSprite(1, 1, 2),
+                Is.SameAs(_context.VisitorSprites[0]));
         }
 
         [Test]
@@ -55,6 +58,23 @@ namespace Azulon.Tests.EditMode.Configuration
                     1),
                 Throws.TypeOf<ArgumentOutOfRangeException>()
                     .With.Message.Contains("has no requirement at index 1"));
+        }
+
+        [Test]
+        public void GetVisitorSprite_CyclesAcrossDayBoundary()
+        {
+            var configuration = _context.CreateConfig(
+                new RarityUnlockThreshold(ItemRarity.Common, 0));
+            var catalog = new GameContentViewCatalog(configuration);
+
+            var firstVisitor = catalog.GetVisitorSprite(1, 1, 2);
+            var secondVisitor = catalog.GetVisitorSprite(1, 2, 2);
+            var nextDayVisitor = catalog.GetVisitorSprite(2, 1, 2);
+
+            Assert.That(firstVisitor, Is.SameAs(_context.VisitorSprites[0]));
+            Assert.That(secondVisitor, Is.SameAs(_context.VisitorSprites[1]));
+            Assert.That(nextDayVisitor, Is.SameAs(_context.VisitorSprites[0]));
+            Assert.That(secondVisitor, Is.Not.SameAs(nextDayVisitor));
         }
     }
 }

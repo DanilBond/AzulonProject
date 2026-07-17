@@ -22,6 +22,7 @@ namespace Azulon.Configuration.Game.Validation
 
             ValidateItemCatalog(config.ItemCatalog, issues);
             ValidateQuestCatalog(config, issues);
+            ValidateVisitorSprites(config, issues);
             ValidateBalance(config, issues);
             var progression = ValidateProgression(config.RarityThresholds, issues);
             ValidateMarketReachability(config.ItemCatalog, progression, issues);
@@ -90,10 +91,34 @@ namespace Azulon.Configuration.Game.Validation
             {
                 AddError(issues, "Visitors per day must be greater than zero.");
             }
+        }
 
-            if (config.OffersPerVisitor <= 0)
+        private static void ValidateVisitorSprites(
+            GameSessionConfigAsset config,
+            ICollection<CatalogValidationIssue> issues)
+        {
+            if (config.VisitorSprites == null || config.VisitorSprites.Count < 2)
             {
-                AddError(issues, "Offers per visitor must be greater than zero.");
+                AddError(
+                    issues,
+                    "At least two visitor sprites are required so consecutive visitors can look different.");
+                return;
+            }
+
+            var uniqueSprites = new HashSet<UnityEngine.Sprite>();
+            for (var index = 0; index < config.VisitorSprites.Count; index++)
+            {
+                var sprite = config.VisitorSprites[index];
+                if (sprite == null)
+                {
+                    AddError(issues, $"Visitor sprite at index {index} is missing.");
+                    continue;
+                }
+
+                if (!uniqueSprites.Add(sprite))
+                {
+                    AddError(issues, $"Visitor sprite at index {index} is duplicated.");
+                }
             }
         }
 

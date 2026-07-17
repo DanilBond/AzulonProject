@@ -2111,6 +2111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 456420612}
   - component: {fileID: 456420611}
+  - component: {fileID: 456420613}
   m_Layer: 0
   m_Name: CharacterMale
   m_TagString: Untagged
@@ -2165,7 +2166,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 86e0742ca8b6b0f4ca0e6080e82f441c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2192,6 +2193,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &456420613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456420610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db63267d0124e298f37d63ade7a9b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.World.VisitorView
+  _spriteRenderer: {fileID: 456420611}
+  _exitDuration: 0.16
+  _enterDuration: 0.28
+  _entranceOffset: {x: -1.25, y: 0, z: 0}
+  _exitOffset: {x: -1, y: 0, z: 0}
+  _hiddenScale: 0.96
+  _exitEase: 8
+  _enterEase: 9
+  _useUnscaledTime: 1
 --- !u!1 &506703289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,6 +4162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Azulon.Unity::Azulon.Unity.UI.GameScreenController
   _runtime: {fileID: 1768331177}
   _view: {fileID: 888192671}
+  _visitorView: {fileID: 456420613}
 --- !u!1 &891032489
 GameObject:
   m_ObjectHideFlags: 0

@@ -174,9 +174,14 @@ namespace Azulon.Tests.EditMode.Configuration
             int startingCoins,
             int dailyCoinStipend,
             int visitorsPerDay,
-            int offersPerVisitor,
+            IReadOnlyList<Sprite> visitorSprites,
             params RarityUnlockThreshold[] rarityThresholds)
         {
+            if (visitorSprites == null)
+            {
+                throw new ArgumentNullException(nameof(visitorSprites));
+            }
+
             if (rarityThresholds == null)
             {
                 throw new ArgumentNullException(nameof(rarityThresholds));
@@ -191,7 +196,9 @@ namespace Azulon.Tests.EditMode.Configuration
             serializedObject.FindProperty("_startingCoins").intValue = startingCoins;
             serializedObject.FindProperty("_dailyCoinStipend").intValue = dailyCoinStipend;
             serializedObject.FindProperty("_visitorsPerDay").intValue = visitorsPerDay;
-            serializedObject.FindProperty("_offersPerVisitor").intValue = offersPerVisitor;
+            SetObjectArray(
+                serializedObject.FindProperty("_visitorSprites"),
+                visitorSprites);
 
             var thresholdsProperty = serializedObject.FindProperty("_rarityThresholds");
             thresholdsProperty.arraySize = rarityThresholds.Length;

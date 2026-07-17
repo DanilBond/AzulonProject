@@ -71,7 +71,6 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                 4,
                 4,
                 2,
-                3,
                 new[]
                 {
                     new RarityUnlockThreshold(ItemRarity.Common, 0),
@@ -106,21 +105,8 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                 Settings,
                 ItemCatalog,
                 QuestCatalog,
-                new FirstItemRandomSource(),
+                new HighestAvailableIndexRandomSource(),
                 new SequentialMarketOfferIdSource());
-        }
-
-        public static MarketOffer FindOffer(GameSession session, ItemId itemId)
-        {
-            foreach (var offer in session.CurrentOffers.Offers)
-            {
-                if (offer.Item.Id == itemId)
-                {
-                    return offer;
-                }
-            }
-
-            return null;
         }
 
         private static ItemData CreateItem(
@@ -141,11 +127,11 @@ namespace Azulon.Tests.EditMode.Application.Gameplay
                 tags);
         }
 
-        private sealed class FirstItemRandomSource : IRandomSource
+        private sealed class HighestAvailableIndexRandomSource : IRandomSource
         {
             public int NextIndex(int exclusiveUpperBound)
             {
-                return 0;
+                return exclusiveUpperBound - 1;
             }
         }
     }
