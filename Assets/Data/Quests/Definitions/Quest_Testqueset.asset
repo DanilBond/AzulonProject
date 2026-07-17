@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213146615ae119347a9ad923d1daa972, type: 3}
+  m_Name: Quest_Testqueset
+  m_EditorClassIdentifier: Azulon.Configuration::Azulon.Configuration.Quests.GuildQuestDefinition
+  _id: testqueset
+  _displayName: TestQueset
+  _description: Test desc
+  _rewardCoins: 999
+  _rewardReputation: 999
+  _requirements:
+  - {fileID: 11400000, guid: 90c7df7590b720844a704ffc26180f87, type: 2}
